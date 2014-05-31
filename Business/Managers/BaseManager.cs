@@ -12,7 +12,7 @@ namespace Business.Managers
 		protected BaseManager()
 		{
 			DataAccessClient = new DataAccessClient();
-			EntityConverter = new EntityConverter();
+			EntityConverter = new EntityConverter(DataAccessClient);
 		}
 	}
 }

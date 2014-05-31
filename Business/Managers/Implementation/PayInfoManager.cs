@@ -7,7 +7,7 @@ namespace Business.Managers.Implementation
 	{
 		public void AddOrUpdate(PayInfo payInfo, string expenseId)
 		{
-			PayInfoDTO payInfoDTO = EntityConverter.ConvertPayInfo(payInfo);
+			PayInfoDTO payInfoDTO = EntityConverter.Convert(payInfo);
 
 			DataAccessClient.AddOrUpdate(payInfoDTO);
 		}

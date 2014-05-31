@@ -7,23 +7,9 @@ namespace Entities.Implementation
 	[DataContract]
 	public class Trip : IEntity
 	{
-		public Trip(string id, string name, string description, List<User> users, List<Expense> expenses)
+		public Trip(string id, string name, string description, List<User> users, List<Expense> expenses) :
+			this(id, name, description)
 		{
-			if (id == null)
-			{
-				throw new ArgumentNullException("id");
-			}
-
-			if (name == null)
-			{
-				throw new ArgumentNullException("name");
-			}
-			
-			if (description == null)
-			{
-				throw new ArgumentNullException("description");
-			}
-			
 			if (users == null)
 			{
 				throw new ArgumentNullException("users");
@@ -34,11 +20,32 @@ namespace Entities.Implementation
 				throw new ArgumentNullException("expenses");
 			}
 			
+			Users = users;
+			Expenses = expenses;
+		}
+
+		public Trip(string id, string name, string description)
+		{
+			if (id == null)
+			{
+				throw new ArgumentNullException("id");
+			}
+
+			if (name == null)
+			{
+				throw new ArgumentNullException("name");
+			}
+
+			if (description == null)
+			{
+				throw new ArgumentNullException("description");
+			}
+
 			Id = id;
 			Name = name;
 			Description = description;
-			Users = users;
-			Expenses = expenses;
+			Users = new List<User>();
+			Expenses = new List<Expense>();
 		}
 
 		[DataMember]

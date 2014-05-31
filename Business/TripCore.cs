@@ -8,7 +8,7 @@ namespace Business
 	{
 		private readonly TripManager tripManager = new TripManager();
 		private readonly UserManager userManager = new UserManager();
-		private readonly CourseManager courseManager = new CourseManager();
+		private readonly RateManager rateManager = new RateManager();
 		private readonly PayInfoManager payInfoManager = new PayInfoManager();
 		private readonly ExpenseManager expenseManager = new ExpenseManager();
 
@@ -27,9 +27,9 @@ namespace Business
 			expenseManager.AddOrUpdate(expense, tripId);
 		}
 
-		public void AddOrUpdate(Course course, string tripId)
+		public void AddOrUpdate(Rate rate, string tripId)
 		{
-			courseManager.AddOrUpdate(course, tripId);
+			rateManager.AddOrUpdate(rate, tripId);
 		}
 
 		public void AddOrUpdate(PayInfo payInfo, string expenseId)
@@ -37,19 +37,19 @@ namespace Business
 			payInfoManager.AddOrUpdate(payInfo, expenseId);
 		}
 
-		public List<Trip> GetTrips(string userId)
+		public IEnumerable<Trip> GetTrips(string userId)
 		{
 			return tripManager.GetTrips(userId);
 		}
 
-		public List<Expense> GetExpenses(string tripId)
+		public IEnumerable<Expense> GetExpenses(string tripId)
 		{
 			return expenseManager.GetExpenses(tripId);
 		}
 
-		public List<Course> GetCourses(string tripId)
+		public IEnumerable<Rate> GetCourses(string tripId)
 		{
-			return courseManager.GetCourses(tripId);
+			return rateManager.GetRates(tripId);
 		}
 	}
 }

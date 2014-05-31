@@ -11,14 +11,14 @@ namespace Business
 
 		void AddOrUpdate(Expense expense, string tripId);
 
-		void AddOrUpdate(Course expense, string tripId);
+		void AddOrUpdate(Rate expense, string tripId);
 
 		void AddOrUpdate(PayInfo user, string expenseId);
 
-		List<Trip> GetTrips(string userId);
+		IEnumerable<Trip> GetTrips(string userId);
 
-		List<Expense> GetExpenses(string tripId);
+		IEnumerable<Expense> GetExpenses(string tripId);
 
-		List<Course> GetCourses(string tripId);
+		IEnumerable<Rate> GetCourses(string tripId);
 	}
 }

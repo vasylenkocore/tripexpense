@@ -22,7 +22,7 @@ namespace TripExpenseService
 
 		[WebInvoke(Method = "PUT", UriTemplate = "trips/{tripId}/courses")]
 		[OperationContract]
-		void AddOrUpdateCourse(Course course, string tripId);
+		void AddOrUpdateCourse(Rate rate, string tripId);
 
 		[WebInvoke(Method = "PUT", UriTemplate = "expenses/{expenseId}/payifos")]
 		[OperationContract]
@@ -30,14 +30,14 @@ namespace TripExpenseService
 
 		[WebInvoke(Method = "GET", UriTemplate = "trips/{userId}")]
 		[OperationContract]
-		List<Trip> GetTrips(string userId);
+		IEnumerable<Trip> GetTrips(string userId);
 
 		[WebInvoke(Method = "GET", UriTemplate = "expenses/{tripId}")]
 		[OperationContract]
-		List<Expense> GetExpenses(string tripId);
+		IEnumerable<Expense> GetExpenses(string tripId);
 
 		[WebInvoke(Method = "GET", UriTemplate = "courses/{tripId}")]
 		[OperationContract]
-		List<Course> GetCourses(string tripId);
+		IEnumerable<Rate> GetCourses(string tripId);
 	}
 }

@@ -55,7 +55,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DataAccessClient.cs" />
-    <Compile Include="Entities\CourseDTO.cs" />
+    <Compile Include="Entities\RateDTO.cs" />
     <Compile Include="Entities\ExpenseDTO.cs" />
     <Compile Include="Entities\PayInfoDTO.cs" />
     <Compile Include="Entities\TripDTO.cs" />

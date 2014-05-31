@@ -5,14 +5,18 @@ namespace Business.Converters
 {
 	public interface IEntityConverter
 	{
-		UserDTO ConvertUser(User user);
+		UserDTO Convert(User user);
 
-		TripDTO ConvertTrip(Trip trip);
+		TripDTO Convert(Trip trip);
 
-		ExpenseDTO ConvertExpense(Expense expense);
+		ExpenseDTO Convert(Expense expense);
 
-		PayInfoDTO ConvertPayInfo(PayInfo payInfo);
+		PayInfoDTO Convert(PayInfo payInfo);
 
-		CourseDTO ConvertCourse(Course course);
+		RateDTO Convert(Rate rate, string tripId);
+
+		Rate Convert(RateDTO rateDTO);
+
+		Trip Convert(TripDTO trip);
 	}
 }

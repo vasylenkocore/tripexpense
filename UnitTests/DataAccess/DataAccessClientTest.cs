@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 using DataAccess;
 using DataAccess.Entities;
@@ -18,20 +19,19 @@ namespace UnitTests.DataAccess
 			SaveSaveLoadDeleteTest<UserDTO>(user);
 		}
 
-		[TestMethod]
-		public void TripDTOSaveDeleteTest()
+		public void FillTrip(Action<TripDTO> action)
 		{
 			IDataAccessClient dataAccessClient = new DataAccessClient();
 
-			TripDTO tripDTO = new TripDTO("MyFirstTrip", "Yo-ho-ho, it's my first trip");
+			TripDTO tripDTO = new TripDTO(Guid.NewGuid().ToString(), "Yo-ho-ho, it's my first trip");
 
-			UserDTO antonUser = new UserDTO("Anton", "123456", "+380501111111", "Anton@test.com");
-			UserDTO nataliaUser = new UserDTO("Natalia", "123456", "+380662222222", "Natalia@test.com");
-			UserDTO sergeyUser = new UserDTO("Sergey", "123456", "+38063333333", "Sergey@test.com");
-			UserDTO illiaUser = new UserDTO("Illia", "123456", "+380984444444", "Illia@test.com");
+			UserDTO antonUser = new UserDTO("Anton", "123456", Guid.NewGuid().ToString(), "Anton@test.com");
+			UserDTO nataliaUser = new UserDTO("Natalia", "123456", Guid.NewGuid().ToString(), "Natalia@test.com");
+			UserDTO sergeyUser = new UserDTO("Sergey", "123456", Guid.NewGuid().ToString(), "Sergey@test.com");
+			UserDTO illiaUser = new UserDTO("Illia", "123456", Guid.NewGuid().ToString(), "Illia@test.com");
 
-			CourseDTO courseDTO1 = new CourseDTO(tripDTO.Id, "UAH", "USD", 11.98);
-			CourseDTO courseDTO2 = new CourseDTO(tripDTO.Id, "UAH", "EUR", 16.55);
+			RateDTO rateDTO1 = new RateDTO(tripDTO.Id, "UAH", "USD", 11.98);
+			RateDTO rateDTO2 = new RateDTO(tripDTO.Id, "UAH", "EUR", 16.55);
 
 			try
 			{
@@ -40,15 +40,15 @@ namespace UnitTests.DataAccess
 				dataAccessClient.AddOrUpdate(sergeyUser);
 				dataAccessClient.AddOrUpdate(illiaUser);
 
-				dataAccessClient.AddOrUpdate(courseDTO1);
-				dataAccessClient.AddOrUpdate(courseDTO2);
+				dataAccessClient.AddOrUpdate(rateDTO1);
+				dataAccessClient.AddOrUpdate(rateDTO2);
 
 				tripDTO.UserIds.Add(antonUser.Id);
 				tripDTO.UserIds.Add(nataliaUser.Id);
 				tripDTO.UserIds.Add(sergeyUser.Id);
 				tripDTO.UserIds.Add(illiaUser.Id);
 
-				List<PayInfoDTO> paidInfoFly = 
+				List<PayInfoDTO> paidInfoFly =
 					new List<PayInfoDTO>
 					    {
 						    new PayInfoDTO(nataliaUser.Id, 602.56, "USD"),
@@ -57,7 +57,7 @@ namespace UnitTests.DataAccess
 
 				tripDTO.ExpenseDTOs.Add(new ExpenseDTO("Fly", "Kiev-Amsterdam", paidInfoFly));
 
-				List<PayInfoDTO> paidInfoTrain = 
+				List<PayInfoDTO> paidInfoTrain =
 					new List<PayInfoDTO>
 						{
 							new PayInfoDTO(illiaUser.Id, 1200.21, "UAH")
@@ -66,19 +66,27 @@ namespace UnitTests.DataAccess
 				tripDTO.ExpenseDTOs.Add(new ExpenseDTO("Train", "Dnepr-Kiev", paidInfoTrain));
 
 				dataAccessClient.AddOrUpdate(tripDTO);
-			} 
-			finally 
+			}
+			finally
 			{
+				action(tripDTO);
+
 				dataAccessClient.Delete<UserDTO>(antonUser.Id);
 				dataAccessClient.Delete<UserDTO>(nataliaUser.Id);
 				dataAccessClient.Delete<UserDTO>(sergeyUser.Id);
 				dataAccessClient.Delete<UserDTO>(illiaUser.Id);
 
-				dataAccessClient.Delete<CourseDTO>(courseDTO1.Id);
-				dataAccessClient.Delete<CourseDTO>(courseDTO2.Id);
+				dataAccessClient.Delete<RateDTO>(rateDTO1.Id);
+				dataAccessClient.Delete<RateDTO>(rateDTO2.Id);
 
 				dataAccessClient.Delete<TripDTO>(tripDTO.Id);
 			}
+		}
+
+		[TestMethod]
+		public void TripDTOSaveDeleteTest()
+		{
+			FillTrip(trip => { });
 		}
 
 		private void SaveSaveLoadDeleteTest<T>(IIdentityObject identityObject) where T : IIdentityObject

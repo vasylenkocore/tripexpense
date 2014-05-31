@@ -50,10 +50,17 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="Business\Managers\Implementation\ExpenseManagerTest.cs" />
+    <Compile Include="Business\Managers\Implementation\RateManagerTest.cs" />
+    <Compile Include="Business\Managers\Implementation\TripManagerTest.cs" />
     <Compile Include="DataAccess\DataAccessClientTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Business\Business.csproj">
+      <Project>{622D9BAE-A509-4CC1-AADD-D5594894EF0E}</Project>
+      <Name>Business</Name>
+    </ProjectReference>
     <ProjectReference Include="..\DataAccess\DataAccess.csproj">
       <Project>{E898FD5B-67B0-4E54-8B1D-788D627E23E5}</Project>
       <Name>DataAccess</Name>

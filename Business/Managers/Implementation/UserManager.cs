@@ -7,7 +7,7 @@ namespace Business.Managers.Implementation
 	{
 		public void AddOrUpdate(User user)
 		{
-			UserDTO userDTO = EntityConverter.ConvertUser(user);
+			UserDTO userDTO = EntityConverter.Convert(user);
 
 			DataAccessClient.AddOrUpdate(userDTO);
 		}

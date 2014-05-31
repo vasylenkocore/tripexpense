@@ -4,15 +4,10 @@ using System.Runtime.Serialization;
 namespace Entities.Implementation
 {
 	[DataContract]
-	public class Course : IEntity
+	public class Rate : IEntity
 	{
-		public Course(string id, string tripId, string currencyOne, string currencyTwo, double course)
+		public Rate(string currencyOne, string currencyTwo, double rate)
 		{
-			if (tripId == null)
-			{
-				throw new ArgumentNullException("tripId");
-			}
-
 			if (currencyOne == null)
 			{
 				throw new ArgumentNullException("currencyOne");
@@ -23,11 +18,26 @@ namespace Entities.Implementation
 				throw new ArgumentNullException("currencyTwo");
 			}
 
-			Id = id;
-			TripId = tripId;
 			CurrencyOne = currencyOne;
 			CurrencyTwo = currencyTwo;
-			CourseAmount = course;
+			RateAmount = rate;
+		}
+
+		public Rate(string id, string tripId, string currencyOne, string currencyTwo, double rate)
+			: this(currencyOne, currencyTwo, rate)
+		{
+			if (id == null)
+			{
+				throw new ArgumentNullException("id");
+			}
+
+			if (tripId == null)
+			{
+				throw new ArgumentNullException("tripId");
+			}
+
+			Id = id;
+			TripId = tripId;
 		}
 
 		[DataMember]
@@ -37,7 +47,7 @@ namespace Entities.Implementation
 		public string TripId { get; set; }
 		
 		[DataMember]
-		public double CourseAmount { get; set; }
+		public double RateAmount { get; set; }
 
 		[DataMember]
 		public string CurrencyOne { get; set; }

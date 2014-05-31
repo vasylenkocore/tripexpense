@@ -4,9 +4,9 @@ using DataAccess.Helper;
 
 namespace DataAccess.Entities
 {
-	public class CourseDTO : IIdentityObject
+	public class RateDTO : IIdentityObject
 	{
-		public CourseDTO(string tripId, string currencyOne, string currencyTwo, double course)
+		public RateDTO(string tripId, string currencyOne, string currencyTwo, double course)
 			: this(
 				MongoIdentityHelper.GetComplexIdentity(tripId, currencyOne, currencyTwo),
 				tripId,
@@ -16,7 +16,7 @@ namespace DataAccess.Entities
 		{
 		}
 
-		public CourseDTO(string id, string tripId, string currencyOne, string currencyTwo, double course)
+		private RateDTO(string id, string tripId, string currencyOne, string currencyTwo, double course)
 		{
 			if (tripId == null)
 			{
@@ -37,8 +37,7 @@ namespace DataAccess.Entities
 			CurrencyOne = currencyOne;
 			CurrencyTwo = currencyTwo;
 			Course = course;
-
-			Id = MongoIdentityHelper.GetComplexIdentity(tripId, currencyOne, currencyTwo);
+			Id = id;
 		}
 
 		public string TripId { get; set; }

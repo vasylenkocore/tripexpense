@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using DataAccess.Builders;
 using DataAccess.Entities;
 using DataAccess.Entities.Interfaces;
 using DataAccess.Exceptions;
 using MongoDB.Driver;
 using MongoDB.Driver.Builders;
+using MongoDB.Driver.Linq;
 
 namespace DataAccess
 {
@@ -26,10 +28,11 @@ namespace DataAccess
 
 		private MongoDatabase MongoDatabase { get; set; }
 
-		public void AddOrUpdate<T>(T entity) where T : IIdentityObject
+		public T AddOrUpdate<T>(T entity) where T : IIdentityObject
 		{
 			MongoCollection<T> collection = MongoDatabase.GetCollection<T>(collectionNames[entity.GetType()]);
 			CheckResult(collection.Save(entity));
+			return Get<T>(entity.Id);
 		}
 
 		public void Delete<T>(string id) where T : IIdentityObject
@@ -53,11 +56,31 @@ namespace DataAccess
 			return collection.FindOne(query);
 		}
 
+		public IEnumerable<RateDTO> GetRates(string tripId)
+		{
+			MongoCollection<RateDTO> ratesMongoCollection =
+				MongoDatabase.GetCollection<RateDTO>(collectionNames[typeof(RateDTO)]);
+
+			IQueryable<RateDTO> query = ratesMongoCollection.AsQueryable().Where(e => e.TripId == tripId);
+
+			return query.ToList();
+		}
+
+		public IEnumerable<TripDTO> GetTrips(string userId)
+		{
+			MongoCollection<TripDTO> tripsMongoCollection =
+				MongoDatabase.GetCollection<TripDTO>(collectionNames[typeof(TripDTO)]);
+
+			IQueryable<TripDTO> query = tripsMongoCollection.AsQueryable().Where(e => e.UserIds.Contains(userId));
+
+			return query.ToList();
+		}
+
 		private void InitCollectionDictionary()
 		{
 			collectionNames.Add(typeof(UserDTO), "Users");
 			collectionNames.Add(typeof(TripDTO), "Trips");
-			collectionNames.Add(typeof(CourseDTO), "Courses");
+			collectionNames.Add(typeof(RateDTO), "Rates");
 		}
 
 		private void CheckResult(CommandResult result)

@@ -28,9 +28,9 @@ namespace TripExpenseService
 			tripCore.AddOrUpdate(expense, tripId);
 		}
 
-		public void AddOrUpdateCourse(Course course, string tripId)
+		public void AddOrUpdateCourse(Rate rate, string tripId)
 		{
-			tripCore.AddOrUpdate(course, tripId);
+			tripCore.AddOrUpdate(rate, tripId);
 		}
 
 		public void AddOrUpdatePayInfo(PayInfo payInfo, string expenseId)
@@ -38,17 +38,17 @@ namespace TripExpenseService
 			tripCore.AddOrUpdate(payInfo, expenseId);
 		}
 
-		public List<Course> GetCourses(string tripId)
+		public IEnumerable<Rate> GetCourses(string tripId)
 		{
 			return tripCore.GetCourses(tripId);
 		}
 
-		public List<Expense> GetExpenses(string tripId)
+		public IEnumerable<Expense> GetExpenses(string tripId)
 		{
 			return tripCore.GetExpenses(tripId);
 		}
 
-		public List<Trip> GetTrips(string userId)
+		public IEnumerable<Trip> GetTrips(string userId)
 		{
 			return tripCore.GetTrips(userId);
 		}
